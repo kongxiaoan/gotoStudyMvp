@@ -2,11 +2,12 @@ package com.kpa.gotostudymvp.home
 
 import com.kpa.gotostudymvp.BasePresenter
 import com.kpa.gotostudymvp.BaseView
+import com.kpa.gotostudymvp.data.MovieSubject
 
 /**
  *author: mr.kong
  *Date:2018/9/18
- *description:
+ *description:定义UI中的状态和数据操作
  *project name:gotoStudyMvp
  **/
 interface HomeContract {
@@ -18,7 +19,7 @@ interface HomeContract {
         fun loadError()
 
         //加载成功
-        fun loadSuccess(data:MutableList<HomeData>)
+        fun loadSuccess(data:MutableList<MovieSubject>)
 
         //网络错误
         fun networkError()

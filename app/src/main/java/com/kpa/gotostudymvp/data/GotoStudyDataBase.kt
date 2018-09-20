@@ -1,7 +1,5 @@
 package com.kpa.gotostudymvp.data
 
-import com.kpa.gotostudymvp.home.HomeData
-
 /**
  *author: mr.kong
  *Date:2018/9/18

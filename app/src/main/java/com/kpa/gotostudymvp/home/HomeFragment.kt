@@ -2,13 +2,15 @@ package com.kpa.gotostudymvp.home
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.kpa.gotostudymvp.R
+import com.kpa.gotostudymvp.data.MovieSubject
+import com.kpa.gotostudymvp.data.Subject
 
 
 /**
@@ -18,10 +20,13 @@ import com.kpa.gotostudymvp.R
  * to handle interaction events.
  * Use the [HomeFragment.newInstance] factory method to
  * create an instance of this fragment.
- *
+ * 展示UI
  */
 class HomeFragment : Fragment(), HomeContract.View {
     private lateinit var mPersenter: HomeContract.Presenter
+    private lateinit var mRecyclerView: RecyclerView
+    private var mAdapter: HomeCustomAdapter? = null
+    private var mList: MutableList<Subject> = arrayListOf()
     override fun isAlive(): Boolean {
         return isAdded //判断片段是否已经添加到其活动中
     }
@@ -34,10 +39,10 @@ class HomeFragment : Fragment(), HomeContract.View {
 
     }
 
-    override fun loadSuccess(data: MutableList<HomeData>) {
-        data.forEach {
-            Log.e("HomeFragment", "name = ${it.name}")
-        }
+    override fun loadSuccess(data: MutableList<MovieSubject>) {
+        val subjects = data[0].subjects
+        mList.addAll(subjects)
+        mAdapter?.notifyDataSetChanged()
     }
 
     override fun networkError() {
@@ -60,6 +65,23 @@ class HomeFragment : Fragment(), HomeContract.View {
         return inflater.inflate(R.layout.home_fragment, container, false)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initView(view)
+        initRv()
+    }
+
+    private fun initRv() {
+
+
+    }
+
+    private fun initView(view: View) {
+        mAdapter = HomeCustomAdapter(context!!, mList)
+        mRecyclerView = view.findViewById(R.id.home_fragment_rv)
+        mRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        mRecyclerView.adapter = mAdapter
+    }
 
     override fun onResume() {
         super.onResume()

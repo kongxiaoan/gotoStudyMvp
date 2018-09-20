@@ -2,26 +2,23 @@ package com.kpa.gotostudymvp.home
 
 import com.kpa.gotostudymvp.data.GotoStudyDataBase
 import com.kpa.gotostudymvp.data.GotoStudyRepository
+import com.kpa.gotostudymvp.data.MovieSubject
 
 /**
  *author: mr.kong
  *Date:2018/9/18
- *description:
+ *description: 加载数据和更新UI
  *project name:gotoStudyMvp
  **/
-class HomePresenter(mHomeView: HomeContract.View, mGotoStudyRepository: GotoStudyRepository) : HomeContract.Presenter {
-
-    private var mHomeView: HomeContract.View = mHomeView
-    private var mGotoStudyRepository: GotoStudyRepository = mGotoStudyRepository
+class HomePresenter(private var mHomeView: HomeContract.View, private var mGotoStudyRepository: GotoStudyRepository) : HomeContract.Presenter {
 
     init {
         this.mHomeView.setPresenter(this)
-
     }
 
-    fun loadData() {
-       mGotoStudyRepository.getLoadCallback(object :GotoStudyDataBase.LoadDataCallback<HomeData>{
-           override fun onDataLoaded(success: Boolean, list: MutableList<HomeData>) {
+    private fun loadData() {
+       mGotoStudyRepository.getLoadCallback(object :GotoStudyDataBase.LoadDataCallback<MovieSubject>{
+           override fun onDataLoaded(success: Boolean, list: MutableList<MovieSubject>) {
                if(success){
                    mHomeView.loadSuccess(list)
                }
